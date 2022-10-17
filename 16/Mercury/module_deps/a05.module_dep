@@ -1,0 +1,14 @@
+module(2, "a05.m",
+	a05,
+	{},
+	{builtin, io, private_builtin},
+	{char, int, list, md5, string},
+	{},
+	{},
+	{},
+	{},
+	{},
+	no_foreign_export,
+	no_main,
+	{}
+).

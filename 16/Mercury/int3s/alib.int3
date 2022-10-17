@@ -1,0 +1,6 @@
+:- module alib.
+:- interface.
+:- type ch.
+:- type cl.
+:- type_representation(ch, is_eqv_to(character)).
+:- type_representation(cl, is_eqv_to(list(alib.ch))).

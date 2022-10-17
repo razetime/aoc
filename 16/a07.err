@@ -1,0 +1,2 @@
+a07.m:030: In clause for predicate `aba'/3:
+a07.m:030:   warning: variable `L' occurs only once in this scope.

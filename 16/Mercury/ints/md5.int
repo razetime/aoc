@@ -1,0 +1,4 @@
+:- module md5.
+:- interface.
+:- use_module io.
+:- func md5sum(string) = string.

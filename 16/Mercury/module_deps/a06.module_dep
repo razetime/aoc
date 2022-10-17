@@ -1,0 +1,14 @@
+module(2, "a06.m",
+	a06,
+	{},
+	{builtin, io, private_builtin},
+	{alib, bag, int, list, string},
+	{},
+	{},
+	{},
+	{},
+	{},
+	no_foreign_export,
+	no_main,
+	{}
+).

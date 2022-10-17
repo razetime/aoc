@@ -1,0 +1,14 @@
+module(2, "md5.m",
+	md5,
+	{},
+	{builtin, io, private_builtin},
+	{require},
+	{},
+	{},
+	{},
+	{"C"},
+	{"C" - md5},
+	no_foreign_export,
+	no_main,
+	{}
+).

@@ -1,0 +1,14 @@
+module(2, "alib.m",
+	alib,
+	{},
+	{builtin, io, list, private_builtin, string},
+	{},
+	{},
+	{},
+	{},
+	{},
+	{},
+	no_foreign_export,
+	no_main,
+	{}
+).

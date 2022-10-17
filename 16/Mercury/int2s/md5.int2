@@ -1,0 +1,2 @@
+:- module md5.
+:- interface.

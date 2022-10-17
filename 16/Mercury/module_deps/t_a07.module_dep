@@ -1,0 +1,14 @@
+module(2, "t_a07.m",
+	t_a07,
+	{},
+	{builtin, io, private_builtin},
+	{alib, char, int, list, string},
+	{},
+	{},
+	{},
+	{},
+	{},
+	no_foreign_export,
+	no_main,
+	{}
+).

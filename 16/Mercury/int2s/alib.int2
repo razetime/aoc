@@ -1,0 +1,5 @@
+:- module alib.
+:- interface.
+:- use_module list.
+:- type ch == character.
+:- type cl == list.list(alib.ch).
