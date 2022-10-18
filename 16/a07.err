@@ -1,2 +1,4 @@
-a07.m:030: In clause for predicate `aba'/3:
-a07.m:030:   warning: variable `L' occurs only once in this scope.
+a07.m:026: In clause for predicate `aba'/3:
+a07.m:026:   warning: variable `L' occurs only once in this scope.
+Mercury/os/alib.o:alib.c:function mercury__alib__grade_check: error: undefined reference to 'MR_grade_v19_asm_fast_gc_tags3_ubf_ubi64'
+collect2: error: ld returned 1 exit status

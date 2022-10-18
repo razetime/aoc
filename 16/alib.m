@@ -9,7 +9,7 @@
 :- pred seq(list(T),list(T),list(T)).
 :- mode seq(out,in,out) is multi.
 :- pred rlines(string::in,list(string)::out,io::di,io::uo) is det.
-:- func l(string::in)=(cl::out) is det.
+:- pred l(string::in,cl::in,cl::out) is semidet.
 
 :- implementation.
 transpose([],[]).
@@ -27,5 +27,5 @@ rlines(N,L0,!IO):-
   (I=ok(L0)
   ;I=error(E),print(E,!IO),L0=[]).
 
-l(X)=Y:-string.to_char_list(X,Y).
+l(X,Y,Z):-string.to_char_list(X,X0),append(X0,Z,Y).
 :- end_module alib.

@@ -5,8 +5,8 @@
 :- use_module string.
 :- type ch == character.
 :- type cl == list.list(alib.ch).
-:- func l(string) = alib.cl.
-:- mode l((builtin.in)) = (builtin.out) is det.
+:- pred l(string, alib.cl, alib.cl).
+:- mode l((builtin.in), (builtin.in), (builtin.out)) is semidet.
 :- pred rlines(string, list.list(string), io.io, io.io).
 :- mode rlines((builtin.in), (builtin.out), (builtin.di), (builtin.uo)) is det.
 :- pred seq(list.list(T), list.list(T), list.list(T)).
