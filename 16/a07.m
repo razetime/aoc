@@ -13,9 +13,6 @@ tls([X],[])        --> {alp(X)},seq(X).
 tls([X0|X],[Y0|Y]) --> {alp(X0),alp(Y0)},
                        seq(X0),['['],seq(Y0),[']'],tls(X,Y).
 
-:- pred alp(cl::in) is semidet.
-alp(L):-all_true(is_alpha,L).
-
 :- pred abba(cl::in) is semidet.
 abba([A,B,B,A|_]):-A\=B.
 abba([_,A,B,C|L]):-abba([A,B,C|L]).

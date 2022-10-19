@@ -2,11 +2,11 @@
 
 :- interface.
 :- import_module io.
-:- pred main(io::di,io::uo) is det.
+:- pred main(io::di,io::uo) is cc_multi.
 
 :- implementation.
 :- import_module alib.
-:- import_module list,string,int,char,bool,array2d,solutions,require.
+:- import_module list,string,int,char,bool,array2d,solutions,require,bag.
 
 :- type op ---> f;c;r.
 
@@ -14,10 +14,6 @@
 cmd(f,W,H) --> l("rect "),num(W),['x'],num(H).
 cmd(r,R,P) --> l("rotate row y="),num(R),l(" by "),num(P). 
 cmd(c,R,P) --> l("rotate column x="),num(R),l(" by "),num(P).
-
-
-:- pred num(int::out,cl::in,cl::out) is nondet.
-num(N) --> seq(X),{from_char_list(X,X0),to_int(X0,N)}.
 
 :- pred fillwh(int::in,int::in,array2d(bool)::in,array2d(bool)::out) is det.
 fillwh(C,R,A,B):-
@@ -33,54 +29,56 @@ fillwh(C,R,A,B):-
 :- pred rot(op::in,int::in,int::in,array2d(bool)::in,array2d(bool)::out) is det.
 rot(O,I,D,A,B):-
   bounds(A,H,W),
-  (if O=r then
+  (O=r,
    L=map((func(X)={I,X}),0..(W-1)),
    Dr=0,
    Dc=D
-   else if O=c then
+  ;O=c,
    L=map((func(X)={X,I}),0..(H-1)),
    Dr=D,
    Dc=0
-   else unexpected($pred,"only rc")
+  ;unexpected($pred,"only rc")
   ),
-  %S=string(map((func({R,C})={R,C,(R+Dr)rem H,(C+Dc)rem W,P}:-lookup(A,R,C,P)),L)),error(S),
+  Al=lists(A),
+  As=array2d(Al),
   foldl((pred({R,C}::in,X::in,Y::out) is det:-
-          lookup(A,R,C,P),
+          lookup(As,R,C,P),
           R0=(R+Dr)mod H,
           C0=(C+Dc)mod W,
           set(R0,C0,P,X,Y)
-          %S=string({R,C,R0,C0,H,W,lists(Y)}),error(S)
         ),L,A,B)
   .
+
+:- pred b2c(bool::in,char::out) is det.
+b2c(yes,'⎕').
+b2c(no,' ').
    
 main(!IO):-
-  %rlines("inp/08",L0,!IO),
-  %map((pred(X::in,Y::out) is multi:-
-  %      to_char_list(X,X0),
-  %      (if cmd(C,W,H,X0,[])
-  %       then Y={C,W,H}
-  %       else Y={f,0,0}) 
-  %    ),L0,L1),
-  %P1=L1,
-  %L="rect 3x2",
-  %L="rotate row x=1 by 1",
-  %L="320",
-  %(if cmd(C,W,H,to_char_list(L),[]) then L1={C,W,H} else L1={f,0,0}),
-  %(if num(N,to_char_list(L),[]) then L1=N else L1=0),
-  %S=init(6,50,no),
-  S=init(3,7,no),
-  %list.foldl((pred({C,A,B}::in,Y::in,Z::out) is det:-
-  %             (
-  %               C=f,
-  %               fillwh(A,B,Y,Z)
-  %              ;C=r,
-  %               rot(r,A,B,Y,Z)
-  %              ,C=c
-  %               rot(c,A,B,Y,Z)
-  %             ) 
-  %           ),L1,S,P1)
-  fillwh(3,2,S,S0),
-  print_line(lists(S0),!IO),
-  rot(c,1,2,S0,P1),
-  print_line(lists(P1),!IO)
+  rlines("inp/08",L0,!IO),
+  map((pred(X::in,Y::out) is multi:-
+        to_char_list(X,X0),
+        (if cmd(C,W,H,X0,[])
+         then Y={C,W,H}
+         else Y={f,0,0}) 
+      ),L0,L1),
+  S=init(6,50,no),
+  list.foldl((pred({C,A,B}::in,Y::in,Z::out) is det:-
+               (
+                 C=f,
+                 fillwh(A,B,Y,Z)
+                ;C=r,
+                 rot(r,A,B,Y,Z)
+                ;C=c,
+                 rot(c,A,B,Y,Z)
+               ) 
+             ),L1,S,S0),
+  S1=lists(S0),
+  condense(S1,S2),
+  S3=bag(S2),
+  count_value(S3,yes,P1),
+  print_line(P1,!IO),
+  map((pred(X::in,Y::out)is det:-map(b2c,X,X0),from_char_list(X0,Y))
+      ,S1,S4),
+  P2=join_list("\n",S4),
+  print_line(P2,!IO)
   .

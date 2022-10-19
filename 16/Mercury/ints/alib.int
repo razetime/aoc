@@ -5,10 +5,18 @@
 :- use_module string.
 :- type ch == character.
 :- type cl == list.list(alib.ch).
+:- pred alp(alib.cl).
+:- mode alp((builtin.in)) is semidet.
 :- pred l(string, alib.cl, alib.cl).
 :- mode l((builtin.in), (builtin.in), (builtin.out)) is semidet.
+:- pred num(int, alib.cl, alib.cl).
+:- mode num((builtin.out), (builtin.in), (builtin.out)) is nondet.
+:- pred rchr(string, alib.cl, io.io, io.io).
+:- mode rchr((builtin.in), (builtin.out), (builtin.di), (builtin.uo)) is det.
 :- pred rlines(string, list.list(string), io.io, io.io).
 :- mode rlines((builtin.in), (builtin.out), (builtin.di), (builtin.uo)) is det.
+:- pred rstr(string, string, io.io, io.io).
+:- mode rstr((builtin.in), (builtin.out), (builtin.di), (builtin.uo)) is det.
 :- pred seq(list.list(T), list.list(T), list.list(T)).
 :- mode seq((builtin.out), (builtin.in), (builtin.out)) is multi.
 :- pred transpose(list.list(list.list(T)), list.list(list.list(T))).
