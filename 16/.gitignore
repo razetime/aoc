@@ -1,0 +1,12 @@
+*.m
+*.o
+*.c
+*.data
+*.procrep
+*.err
+*.int
+*.int3
+*.c_date
+Mercury
+*.mh
+a??

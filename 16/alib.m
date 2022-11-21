@@ -9,6 +9,7 @@
 :- pred seq(list(T),list(T),list(T)).
 :- mode seq(out,in,out) is multi.
 :- pred rlines(string::in,list(string)::out,io::di,io::uo) is det.
+:- pred rlinesc(string::in,list(cl)::out,io::di,io::uo) is det.
 :- pred l(string::in,cl::in,cl::out) is semidet.
 :- pred rstr(string::in,string::out,io::di,io::uo) is det.
 :- pred rchr(string::in,cl::out,io::di,io::uo) is det.
@@ -32,6 +33,10 @@ rlines(N,L0,!IO):-
   read_named_file_as_lines(N,I,!IO),
   (I=ok(L0)
   ;I=error(_),require.unexpected($pred,"lol")).
+
+rlinesc(N,L0,!IO):-
+  rlines(N,L1,!IO),
+  map((pred(X::in,Y::out) is det:-to_char_list(X,Y)),L1,L0).
 
 l(X,Y,Z):-string.to_char_list(X,X0),append(X0,Z,Y).
 

@@ -15,6 +15,8 @@
 :- mode rchr((builtin.in), (builtin.out), (builtin.di), (builtin.uo)) is det.
 :- pred rlines(string, list.list(string), io.io, io.io).
 :- mode rlines((builtin.in), (builtin.out), (builtin.di), (builtin.uo)) is det.
+:- pred rlinesc(string, list.list(alib.cl), io.io, io.io).
+:- mode rlinesc((builtin.in), (builtin.out), (builtin.di), (builtin.uo)) is det.
 :- pred rstr(string, string, io.io, io.io).
 :- mode rstr((builtin.in), (builtin.out), (builtin.di), (builtin.uo)) is det.
 :- pred seq(list.list(T), list.list(T), list.list(T)).

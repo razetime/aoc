@@ -1,3 +1,0 @@
-t_a07.m:005: In `main'(di, uo):
-t_a07.m:005:   warning: determinism declaration could be tighter.
-t_a07.m:005:   Declared `cc_multi', inferred `det'.

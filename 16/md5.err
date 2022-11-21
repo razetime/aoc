@@ -1,3 +1,0 @@
-md5.m:019: In module `md5':
-md5.m:019:   warning: module `io' is imported in the interface, but it is not
-md5.m:019:   used in the interface.
