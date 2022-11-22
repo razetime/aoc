@@ -1,6 +1,6 @@
 on uniq x do extract first value by value from x end
-
-i:"%s (%i) -> %s" parse -1 drop "\n" split read["inp/07t"]
+on abs x do max x,-x end
+i:"%s (%i) -> %s" parse -1 drop "\n" split read["inp/07"]
 p:() dict ()
 v:() dict ()
 p2n:() dict ()
@@ -15,29 +15,24 @@ each x in i
 end
 p1:extract key where !p@key from v
 show[p1]
-show[p2n]
-on p2 d do
 
+on p2 d do
   if (count p2n[d])>0
     vals:p2n[d]
     nxt:v@vals
     sums:each x in vals
-      a:p2[x]
-      show[x,a]
-      a
+      p2[x]
+      # show[x,a]
     end
-    # show[d,p2n[d]]
-    # show["nxt",nxt]
-    # show[sums]
     bal:sums
 
     u:extract list index by value from bal
     u:extract value orderby each x in u count x end asc from u
-    show[u]
-    if 2=count u
+    if "list"~typeof u[0]
       sms:bal@each x in u first x end
-      diff:mag sms[0]-sms[1]
+      diff:abs[sms[0]-sms[1]]
       show[nxt[first first u]-diff]
+      exit[]
     end    
     v[d]+sum bal 
   else
