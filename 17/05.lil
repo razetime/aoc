@@ -1,0 +1,22 @@
+i:0+-1 drop "\n" split read["inp/05"]
+j:i
+s:0
+ind:0
+while ind<count i
+  s:s+1
+  x:i[ind]
+  i[ind]:i[ind]+1
+  ind:x+ind
+end
+show[s]
+
+# takes a long time.
+s:0
+ind:0
+while ind<count j
+  s:s+1
+  x:j[ind]
+  j[ind]:j[ind]+if j[ind]>2 -1 else 1 end
+  ind:x+ind
+end
+show[s]

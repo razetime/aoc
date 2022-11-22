@@ -1,0 +1,13 @@
+i:-1 drop "\n" split read["inp/02"]
+i:each x in i 0+" " split x end
+p1:sum each x in i
+  (max x)-min x
+end
+show[p1]
+p2:sum each x in i
+  d:each y in x
+    y/x
+  end
+  max raze d*d=floor d
+end
+show[p2]

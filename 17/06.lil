@@ -1,0 +1,19 @@
+i:0+" " split read["inp/06t"]
+v:()
+s:0
+l:0
+while !max(each x in v x~i end)
+  v:v,list i
+  s:s+1
+  m:max i
+  d:first extract index where value=m from i
+  g:i[d]
+  i[d]:0
+  each x in (count i)%d+1+range g
+    i[x]:i[x]+1
+  end
+  l:i
+end
+show[s]
+p2f:extract index where (each x in value x~l end) from v
+show[s-p2f]

@@ -1,0 +1,48 @@
+on uniq x do extract first value by value from x end
+
+i:"%s (%i) -> %s" parse -1 drop "\n" split read["inp/07t"]
+p:() dict ()
+v:() dict ()
+p2n:() dict ()
+each x in i
+  vk:x[0] vv:x[1]
+  pv: if x[2] ", " split x[2] else () end
+  v[vk]:vv
+  each y in pv
+    p[y]:vk
+  end
+  p2n[vk]:pv
+end
+p1:extract key where !p@key from v
+show[p1]
+show[p2n]
+on p2 d do
+
+  if (count p2n[d])>0
+    vals:p2n[d]
+    nxt:v@vals
+    sums:each x in vals
+      a:p2[x]
+      show[x,a]
+      a
+    end
+    # show[d,p2n[d]]
+    # show["nxt",nxt]
+    # show[sums]
+    bal:sums
+
+    u:extract list index by value from bal
+    u:extract value orderby each x in u count x end asc from u
+    show[u]
+    if 2=count u
+      sms:bal@each x in u first x end
+      diff:mag sms[0]-sms[1]
+      show[nxt[first first u]-diff]
+    end    
+    v[d]+sum bal 
+  else
+    v[d]
+  end
+end
+ 
+p2[p1]

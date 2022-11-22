@@ -1,0 +1,37 @@
+on rev x do
+  extract value orderby index desc from x
+end
+
+on find x y do
+  res:()
+  each i in range count x
+     each j in range count first x
+      if y=x[i][j] res:i,j end
+    end
+  end
+  res
+end
+
+i:361527
+s:list list 1
+while (last last s)<i
+  s:flip rev[s]
+  n:first last s
+  s:s,list 1+n+range count last s
+end
+st:find[s 1]
+en:find[s i]
+show[sum en-st]
+
+s2:list list 1
+while (last last s2)<i
+  s2:flip rev[s2]
+  l:last s2
+  n:()
+  each v k in l
+    n:n,l[k-1]+l[k]+l[k+1]+n[k-1]
+  end
+  s2:s2,list n
+end
+
+show[first extract value where value>i from last s2]

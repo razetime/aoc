@@ -1,0 +1,8 @@
+i:read["inp/01"]
+on d i s do
+  sum each x k in i
+   x*x=i[(-1+count i)%k+s]
+  end
+end
+show[d[i 1]]
+show[d[i (-1+count i)/2]]
