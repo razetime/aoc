@@ -1,5 +1,4 @@
-on uniq x do extract first value by value from x end
-on abs x do max x,-x end
+lib:eval[read["lib.lil"]].vars
 i:"%s (%i) -> %s" parse -1 drop "\n" split read["inp/07"]
 p:() dict ()
 v:() dict ()
@@ -30,7 +29,7 @@ on p2 d do
     u:extract value orderby each x in u count x end asc from u
     if "list"~typeof u[0]
       sms:bal@each x in u first x end
-      diff:abs[sms[0]-sms[1]]
+      diff:lib.abs[sms[0]-sms[1]]
       show[nxt[first first u]-diff]
       exit[]
     end    

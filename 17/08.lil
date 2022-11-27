@@ -1,0 +1,34 @@
+i:-1 drop "\n" split read["inp/08"]
+i:"%s %s %i if %s %s %i" parse i
+
+on cmp x y z do
+  if x=">" y>z
+  else if x="==" y=z 
+  else if x="<" y<z
+  else if x="<=" (y<z)|y=z
+  else if x=">=" (y>z)|y=z
+  else if x="!=" !y~z
+  end end end end end end
+end
+on app x y z do
+  if x="inc" y+z
+  else if x="dec" y-z
+  end end
+end
+
+d:() dict ()
+p2:max each x in i
+  a:x[3]
+  b:x[4]
+  c:x[5]
+  e:x[0]
+  f:x[1]
+  g:x[2]
+  if cmp[b d[a] c]
+    d[e]:app[f d[e] g]
+  end
+  max extract value from d
+end
+p1:max extract value from d
+show[p1]
+show[p2]

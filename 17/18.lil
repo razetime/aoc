@@ -1,0 +1,108 @@
+i:-1 drop "\n" split read["inp/18"]
+i:each x in i
+  ii:"%3s %s %s%m" parse x
+  if last ii
+    3 take ii
+  else 
+    2 take ii
+  end
+end
+
+# Part 1
+ip:0
+snd:0
+d:() dict ()
+on get x do
+  y:"%i%m" parse x
+  if y[1]
+    y[0]
+  else d[x] end
+end
+
+while (ip>-1)&ip<count i
+  c:i[ip]
+  if "snd"=first c
+    snd:d[c[1]]
+  else if "set"=first c
+    d[c[1]]:get[c[2]]
+  else if "add"=first c
+    d[c[1]]:d[c[1]]+get[c[2]]
+  else if "mul"=first c
+    d[c[1]]:d[c[1]]*get[c[2]]
+  else if "mod"=first c
+    d[c[1]]:get[c[2]]%d[c[1]]
+  else if "rcv"=first c
+    if get[c[1]]
+      show[snd]
+      ip:-9999
+    end
+  else if "jgz"=first c
+    if get[c[1]]
+      ip:ip+get[c[2]]-1
+    end
+  end end end end end end end
+  ip:ip+1
+end
+
+on p2 d ip q1 q2 do
+  on get x do
+    y:"%i%m" parse x
+    if y[1]
+      y[0]
+    else d[x] end
+  end
+  break:1
+  while break&(ip<count i)&ip>-1
+    c:i[ip]
+    if "snd"=first c
+      q2:q2,get[c[1]]
+      cnt:cnt+d.prg
+    else if "set"=first c
+      d[c[1]]:get[c[2]]
+    else if "add"=first c
+      d[c[1]]:d[c[1]]+get[c[2]]
+    else if "mul"=first c
+      d[c[1]]:d[c[1]]*get[c[2]]
+    else if "mod"=first c
+      d[c[1]]:get[c[2]]%d[c[1]]
+    else if "rcv"=first c
+      if q1
+        d[c[1]]:q1[0]
+        q1:1 drop q1
+      else
+        ip:ip-1
+        break:0
+      end
+    else if "jgz"=first c
+      if get[c[1]]>0
+        ip:ip+get[c[2]]-1
+      end
+    end end end end end end end
+    ip:ip+1
+  end
+
+  res.d:d
+  res.ip:ip
+  res.q:q1
+  res.q2:q2
+  res.b:ip<count i
+  res
+end
+
+s0:("d","ip","q") dict (list "p" dict 0),0,list ()
+s1:("d","ip","q") dict (list ("p","prg") dict 1,1),0,(list ())
+cnt:0
+b0:1
+b1:1
+while (b0|b1)&(cnt=0)|(!s0.q~())|!s1.q~()
+  r0:p2[s0.d s0.ip s0.q s1.q]
+  s1.q:r0.q2
+  b0:r0.b
+  s0:("q2","b") drop r0
+  r1:p2[s1.d s1.ip s1.q s0.q]
+  s0.q:r1.q2
+  b1:r1.b
+  s1:("q2","b") drop r1
+end
+
+show[cnt]

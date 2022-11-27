@@ -1,7 +1,3 @@
-on rev x do
-  extract value orderby index desc from x
-end
-
 on find x y do
   res:()
   each i in range count x

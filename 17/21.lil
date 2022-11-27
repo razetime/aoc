@@ -1,0 +1,96 @@
+lib:eval[read["lib.lil"]].vars
+i:"%s => %s" parse  -1 drop "\n" split read["inp/21"]
+r:() dict ()
+
+# Do the rotations beforehand
+each x in i
+  kv:each y in x
+    35="%a" parse "/" split y
+  end
+  k:kv[0]
+  v:kv[1]
+  each _ in range 4
+    r[lib.rev[k]]:v
+    r[each y in k lib.rev[y] end]:v
+    r[k]:v
+    k:flip lib.rev[k]
+  end
+end
+
+s:(list 0,1,0),
+  (list 0,0,1),
+  (list 1,1,1)
+
+# this is a convenient, array-y way to do the thing.
+# Hence it is also mind-numbingly slow.
+on expand g div do
+  g:each x in g
+    (select list value by floor index/div from x).c0
+  end
+  g:flip each x in flip g 
+    (select list value by floor index/div from x).c0
+  end
+  raze each x in g
+    each y in flip r@x raze y end
+  end
+end
+
+# second attempt
+# still painfully slow, but a bit faster than the queries.
+# This runs out of memory. Always operate on FLAT arrays.
+on expand1 g div do
+  fac:((2,3) dict 3,4)[div]
+  # show[fac]
+  l:count g
+  ng:(fac*l/div) take list ()
+  gr:0
+  while gr<l
+    gc:0
+    while gc<l
+      # show[gr,gc]
+      # get the window
+      win:each wr in range div
+        each wc in range div
+          g[wr+gr][wc+gc]
+        end
+      end
+      new:r[win]
+      ngr:0
+      while ngr<fac
+        ngc:0
+        while ngc<fac
+          # show[(ngr+gr*fac),(ngc+gc*fac)]
+          ng[ngr+(gr/div)*fac][ngc+(gc/div)*fac]:new[ngr][ngc]
+          ngc:ngc+1
+        end
+        ngr:ngr+1
+      end
+      gc:gc+div
+    end
+    gr:gr+div
+  end
+  ng
+end
+
+on disp x do
+  each y in x
+    print[".#"@y]
+  end
+end
+
+c:0
+while c<18
+  show[c]
+  if c=5 # part 1
+    print["Part 1: %i" format sum raze s]
+  end
+  if 0=2%count s
+    s:expand[s 2]
+  else if 0=3%count s
+    s:expand[s 3]
+  end end
+  c:c+1
+end
+# show[s]
+# disp[s]
+print["Part 2: %i" format sum raze s]

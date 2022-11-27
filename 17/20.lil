@@ -1,0 +1,34 @@
+lib:eval[read["lib.lil"]].vars
+i:-1 drop "\n" split read["inp/20"]
+i:each x in i
+  "pva" dict flip 1 drop flip "%2s<%i,%i,%i>" parse ", " split x
+end
+# Part 1
+# Uses the formula S=(u*t)+(1/2)*a*t^2
+# pretty cheesy.
+tC:1000
+r:each x in i
+  lib.mhdist[(0,0,0) x.p+(x.v*tC)+0.5*x.a*tC^2]
+end
+show[extract index where r=min r from r]
+
+# Part 2
+# again very cheesy. may need iteration count changes for other inputs.
+c:0
+while c<100
+  # show[i]
+  i:each x in i
+    x.v:x.v+x.a
+    x.p:x.p+x.v
+  end
+  same:extract list index by value from i..p
+  # show[same]
+  inds:(),extract raze value 
+       where each x in value 1=count x end
+       from same
+  # show[inds]
+  i:i@inds
+  c:c+1
+end
+
+show[count i]

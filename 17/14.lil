@@ -1,0 +1,48 @@
+lib:eval[read["lib.lil"]].vars
+# Part 1:
+i:"nbysizxe"
+
+bin:"0123456789abcdef" dict "0000","0001","0010","0011","0100","0101","0110","0111","1000","1001","1010","1011","1100","1101","1110","1111"
+grid:each x in range 128
+  cmd:"echo '%s-%i' | lilt 10.lil" format i,x
+  "" fuse bin@shell[cmd].out
+end
+
+p1i:"\n" fuse grid
+# save to file because i don't wanna wait ages to test part 2
+# Comment out lines 3-14 to skip this long part.
+write["14g.txt" p1i] 
+
+i:-48+"%a" parse "\n" split p1:read["14g.txt"]
+# i:-48+"%a" parse -1 drop "\n" split read["14gt.txt"]
+
+show[extract count value where value="1" from p1]
+
+# Part 2:
+vis:i*0
+g:0
+each r in range count i
+  each c in range count first i
+    if i[r][c]&!vis[r][c]
+      q:list r,c
+      while q
+        cu:q[0]
+        a:cu[0]
+        b:cu[1]
+        vis[a][b]:1
+        q:1 drop q
+        dp:(list a,b+1),(list (a+1),b),(list a,b-1),(list (a-1),b)
+        each x in dp
+          if i[x[0]][x[1]]&!vis[x[0]][x[1]]
+            q:q,list x
+          end
+        end
+        q:lib.uniq[q]
+      end
+      g:g+1
+    end
+  end
+end
+
+show[g]
+

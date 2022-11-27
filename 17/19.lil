@@ -1,0 +1,37 @@
+i:-1 drop "\n" split read["inp/19"]
+c:extract index where "|"=value from first i
+r:0
+dr:1
+dc:0
+d:0
+l:()
+st:0
+while !i[r][c]=" "
+  if i[r][c]="+"
+    if dr=0
+      if i[r+1][c] in "ABCDEFGHIJKLMNOPQRSTUVWXYZ|"
+        dr:1
+        dc:0
+      else
+        dr:-1
+        dc:0
+      end
+    else
+      if i[r][c+1] in "ABCDEFGHIJKLMNOPQRSTUVWXYZ-"
+        dr:0
+        dc:1
+      else
+        dr:0
+        dc:-1
+      end
+    end
+  else if i[r][c] in "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    l:l,i[r][c]
+  end end  
+  r:r+dr
+  c:c+dc
+  st:st+1
+end
+
+print["" fuse l]
+show[st]

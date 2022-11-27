@@ -1,0 +1,34 @@
+lib:eval[read["lib.lil"]].vars
+io:-1 drop "\n" split read["inp/12"]
+d: () dict ()
+i:"%i <-> %s" parse io
+each x in i
+  d[x[0]]:0+", " split x[1]
+end
+
+on bfs d s do
+  q:list s
+  v:()
+  while q
+    c:first q
+    q:1 drop q
+    # show["---"]
+    # show[v]
+    # show[v drop d[c]]
+    q:q,v drop d[c]
+    v:v,c
+  end
+  lib.uniq[v]
+end
+
+p1:bfs[d]
+show[count bfs[d]]
+v:()
+g:0
+while d
+  s:first extract key from d
+  v:bfs[d s]
+  g:g+1
+  d:v drop d
+end
+show[g]

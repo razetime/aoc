@@ -1,0 +1,35 @@
+lib:eval[read["lib.lil"]].vars
+io:-1 drop read["inp/11"]
+# io:"ne,ne,ne"
+# io:"ne,ne,sw,sw"
+# io:"ne,ne,s,s"
+# io:"se,sw,se,sw,sw"
+i:"," split io
+on hdist p1 p2 do
+  dp:p1-p2
+  if lib.sgn[dp[0]]=lib.sgn[dp[1]]
+    lib.abs[sum dp]
+  else
+    max lib.absv[dp]
+  end
+end
+
+on mv x y do
+  a:0
+  if x="n"  a:(0,1) end
+  if x="s"  a:(0,-1) end
+  if x="ne" a:(1,0) end
+  if x="sw" a:(-1,0) end
+  if x="se" a:(1,-1) end
+  if x="nw" a:(-1,1) end
+  a
+end
+
+pos:(0,0)
+p2: max each x in i
+  pos:pos+mv[x pos]
+  hdist[(0,0) pos]
+end
+
+show[hdist[(0,0) pos]]
+show[p2]

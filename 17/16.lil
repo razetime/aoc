@@ -1,0 +1,53 @@
+lib:eval[read["lib.lil"]].vars
+i:"," split -1 drop  read["inp/16"]
+os:s:"abcdefghijklmnop"
+
+i:each x in i
+  if "s"=first x
+    "s%i" parse x
+  else if "x"=first x
+    "x%i/%i" parse x
+  else if "p"=first x
+    "p%1s/%1s" parse x
+  end end end
+end
+
+on p1 s do
+  each x in i
+    if 1=count x
+      s:"%s%s" format ((-x) take s),(-x) drop s
+    else if "number"=typeof first x
+      t:s[x[0]]
+      s[x[0]]:s[x[1]]
+      s[x[1]]:t
+    else
+      f:x[0]
+      l:x[1]
+      i1:extract index where f=value from s
+      i2:extract index where l=value from s
+      t:s[i1]
+      s[i1]:s[i2]
+      s[i2]:t
+    end end
+  end
+  s
+end
+
+show[p1[s]]
+
+g:0
+
+while (g=0)|!s~os
+  s:p1[s]
+  g:g+1
+end
+
+show[g]
+
+tms:g%1000000000
+s:os
+each _ in range tms
+  s:p1[s]
+end
+
+show[s]

@@ -1,0 +1,56 @@
+lib:eval[read["lib.lil"]].vars
+
+i:-1 drop "\n" split read["inp/13"]
+i:"%i: %i" parse i
+d:()dict()
+
+each x in i
+  d[x[0]]:x[1]
+end
+
+n:max ks:extract key from d # num of entries.
+on shift t do
+  each v k in t
+    if d[k]=t[k].t+t[k].del
+      t[k].del:-1
+    end
+    if -1=t[k].t+t[k].del
+      t[k].del:1
+    end
+    t[k].t:t[k].t+t[k].del
+  end
+  t
+end
+
+on p1 d t do
+  cau:()
+  each x in range n+1
+    if (t[x].t=0)&d[x]
+      cau:cau,x
+    end
+    t:shift[t]
+  end
+  cau
+end
+
+t:ks dict n take list ("t","del")dict(0,1)
+p1r:p1[d t]
+show[sum p1r*d@p1r]
+
+# Part 2
+# Very, very slow, has a progress indicator.
+on catch del d r do
+  0=(2*r-1)%del+d
+end
+
+delay:0
+f:1
+while f
+  f:max each v k in d catch[delay k v] end
+  delay:delay+1
+  if 0=1000000%delay
+    show["Delay: %i" format delay]
+  end
+end
+
+show[delay-1]

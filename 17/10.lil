@@ -1,0 +1,39 @@
+lib:eval[read["lib.lil"]].vars
+# io:-1 drop read["inp/10"]
+io:input[""]
+i:0+"," split io 
+
+on p1 i l ss sp do
+  len:count l
+  each x in i
+    ids:len%sp+range x
+    r:lib.rev[l@ids]
+    each y k in ids
+      l[y]:r[k]
+    end
+    sp:len%sp+ss+x
+    ss:ss+1
+  end
+  ("l","ss","sp") dict (list l),ss,sp
+end
+
+p:2 take p1[i range 256 0 0].l
+# show[p[0]*p[1]]
+
+# Part 2
+
+i2:"%a" parse io
+i2:i2,17, 31, 73, 47, 23
+res:("l","ss","sp") dict (list range 256),0,0
+each _ in range 64
+  res:p1[i2 res.l res.ss res.sp]
+end
+
+grp:extract list value by floor index/16 from res.l
+
+p2: "" fuse each x in grp
+  cmd: "echo $((%s))" format "^" fuse x
+  "%02h" format "%i\n" parse shell[cmd].out
+end
+
+print[p2]

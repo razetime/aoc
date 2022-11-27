@@ -1,0 +1,28 @@
+# lib:eval[read["lib.lil"]].vars
+i:382
+
+a:list 0
+c:0
+each x in 1 drop range 2018
+  c:(count a)%c+i
+  a:((c+1) take a),x,(c+1) drop a
+  c:c+1
+end
+show[first (c+1) drop a]
+
+# Part 2
+# very, very slow as usual. Progress indicator for every 10 million included.
+p2:0
+c:0
+x:1
+while x<50000001
+  c:1+x%c+i
+  if c=1
+    p2:x
+  end
+  x:x+1
+  if 0=10000000%x
+    show[x]
+  end
+end
+show[p2]

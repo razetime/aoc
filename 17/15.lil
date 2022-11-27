@@ -1,0 +1,43 @@
+lib:eval[read["lib.lil"]].vars
+i:table "%24s%i" parse -1 drop "\n" split read["inp/15"]
+
+# This is just a massive drag. both parts are incredibly slow.
+# both parts have a progress indicator:
+i:i.c1
+i:65,8921
+m:16807,48271
+mod:2147483647
+x:0
+cnt:0
+while x<40000000
+  i:mod%i*m
+  a:i[0]
+  b:i[1]
+  if !10000000%x show[x] end
+  cnt:cnt+(65536%a)~65536%b
+  x:x+1
+end
+show[cnt]
+
+# Part 2
+print["Part 2:"]
+on next x mul chk do
+  mod:2147483647
+  x:mod%x*mul
+  while chk%x
+    x:mod%x*mul
+  end
+  x
+end
+a:i[0]
+b:i[1]
+x:0
+cnt:0
+while x<5000000
+  if 10000000%x show[x] end
+  a:next[a 16807 4]
+  b:next[b 48271 8]
+  cnt:cnt+(65536%a)~65536%b
+  x:x+1
+end
+show[cnt]

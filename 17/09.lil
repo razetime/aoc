@@ -1,0 +1,35 @@
+i:read["inp/09"]
+it:-1 drop "\n" split read["inp/09t"]
+on p1p2 x do
+  s:0
+  s2:0
+  d:0
+  i:0
+  while (d>0)|i=0
+    if x[i]="{"
+      s:s+d+1
+      d:d+1
+    end
+    if x[i]="}"
+      d:d-1
+    end
+    if x[i]="<"
+      while !x[i]=">"
+      # show[x[i]]
+        if x[i]="!"
+          i:i+2
+        else
+          i:i+1
+          s2:s2+1
+        end
+      end
+      s2:s2-1
+    end
+    i:i+1
+  end
+  s,s2
+end
+
+
+show[p1p2[i]]
+# show[each x in it p1p2[x] end]
