@@ -1,5 +1,5 @@
 lib:eval[read["lib.lil"]].vars
-i:"%s => %s" parse  -1 drop "\n" split read["inp/21"]
+i:"%s => %s" parse  -1 drop "\n" split read["inp/21t"]
 r:() dict ()
 
 # Do the rotations beforehand
@@ -21,8 +21,7 @@ s:(list 0,1,0),
   (list 0,0,1),
   (list 1,1,1)
 
-# this is a convenient, array-y way to do the thing.
-# Hence it is also mind-numbingly slow.
+# convenient, array-y way
 on expand g div do
   g:each x in g
     (select list value by floor index/div from x).c0
@@ -36,8 +35,6 @@ on expand g div do
 end
 
 # second attempt
-# still painfully slow, but a bit faster than the queries.
-# This runs out of memory. Always operate on FLAT arrays.
 on expand1 g div do
   fac:((2,3) dict 3,4)[div]
   # show[fac]
@@ -49,11 +46,17 @@ on expand1 g div do
     while gc<l
       # show[gr,gc]
       # get the window
-      win:each wr in range div
-        each wc in range div
-          g[wr+gr][wc+gc]
+      win:0
+      wr:0
+      while wr<div
+        wc:0
+        while wc<div
+          win[wr][wc]:g[wr+gr][wc+gc]
+          wc:wc+1
         end
+        wr:wr+1
       end
+      # show[win]
       new:r[win]
       ngr:0
       while ngr<fac
@@ -85,12 +88,12 @@ while c<18
     print["Part 1: %i" format sum raze s]
   end
   if 0=2%count s
-    s:expand[s 2]
+    s:expand1[s 2]
   else if 0=3%count s
-    s:expand[s 3]
+    s:expand1[s 3]
   end end
   c:c+1
 end
 # show[s]
-# disp[s]
+disp[s]
 print["Part 2: %i" format sum raze s]
