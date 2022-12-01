@@ -1,0 +1,9 @@
+l:eval[read["lib.lil"]].vars
+i:"\n\n" split -1 drop read["inp/01"]
+
+i:0+each x in i "\n" split x end
+
+p1:each x in i sum x end
+show[max p1]
+
+show[sum -3 take extract value orderby value asc from p1]

@@ -1,0 +1,27 @@
+on rev x do
+  (),extract value orderby index desc from x
+end
+on uniq x do
+  if x~() () else
+    t:select list first value by value from x
+    t.c0
+  end
+end
+on abs x do max x,-x end
+on absv x do each y in x abs[y] end end
+on sgn x do
+  if x<0 -1
+  else if x=0 0
+  else 1
+  end end
+end
+on base x n do
+  a:()
+  while x
+    a:a,n%x
+    x:floor x/n
+  end
+  rev[a]
+end
+
+on mhdist p1 p2 do sum absv[p2-p1] end  
