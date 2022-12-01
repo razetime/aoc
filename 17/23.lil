@@ -1,0 +1,48 @@
+i:-1 drop "\n" split read["inp/23"]
+i:each x in i
+  ii:"%3s %s %s%m" parse x
+  if last ii
+    3 take ii
+  else 
+    2 take ii
+  end
+end
+
+# Part 1
+ip:0
+snd:0
+p1:0
+d:"a" dict 1
+d:0
+on get x do
+  y:"%i%m" parse x
+  if y[1]
+    y[0]
+  else d[x] end
+end
+
+while (ip>-1)&ip<count i
+  c:i[ip]
+  if "set"=first c
+    d[c[1]]:get[c[2]]
+  else if "sub"=first c
+    d[c[1]]:d[c[1]]-get[c[2]]
+  else if "mul"=first c
+    p1:p1+1
+    d[c[1]]:d[c[1]]*get[c[2]]
+  else if "jnz"=first c
+    # show[get[c[1]]]
+    if get[c[1]]
+      # show["jgzing"]
+      ip:ip+get[c[2]]-1
+    end
+  end end end end
+  show[c]
+  show[d]
+  print["---"]
+  if c[1]="h"
+    exit[]
+  end
+  ip:ip+1
+end
+show[p1]

@@ -1,0 +1,91 @@
+l:eval[read["lib.lil"]].vars
+i:-1 drop "\n" split read["inp/22"]
+i2:i
+on turn p b do
+  if b
+    p[1],-p[0]
+  else
+    (-p[1]),p[0]
+  end
+end
+
+r:floor (count i)/2
+c:floor (count i[0])/2
+
+# Part 1
+# p:r,c
+# dp:-1,0
+# n:0
+# # show[r,c]
+# p1:0
+# while n<10000
+#   j:i
+#   chk:i[p[0]][p[1]]="#"
+#   p1:p1+!chk
+#   dp:turn[dp chk]
+#   i[p[0]][p[1]]:"#."[chk]
+#   p:p+dp
+#   if p[0]=-1
+#     i:((count i[0]) take "."),i
+#     p[0]:0
+#   else if p[1]=-1
+#     i:each x in i "%s%s" format (".",x) end
+#     p[1]:0
+#   else if p[0]=count i
+#     i:i,(count i[0]) take "."
+#   else if p[1]=count i[0]
+#     i:each x in i "%s%s" format (x,".") end
+#   end end end end
+#   n:n+1
+# end  
+# show[p1]
+
+i:i2
+p:r,c
+dp:-1,0
+n:0
+p2:0
+while n<10000000
+  # print["\n" fuse i]
+  c:i[p[0]][p[1]]
+  p2:p2+i[p[0]][p[1]]="W"
+  if c="."
+    dp:turn[dp 0]
+    i[p[0]][p[1]]:"W"
+  else if c="W"
+    i[p[0]][p[1]]:"#"
+  else if c="#"
+    dp:turn[dp 1]
+    i[p[0]][p[1]]:"F"
+  else if c="F"
+    dp:-dp
+    i[p[0]][p[1]]:"."
+  end end end end
+  p:p+dp
+  if p[0]=-1
+    # show[1]
+    i:((count i[0]) take "."),i
+    p[0]:0
+  else if p[1]=-1
+    # show[2]
+    i:each x in i "%s%s" format (".",x) end
+    p[1]:0
+  else if p[0]=count i
+    # show[3]
+    i:i,(count i[0]) take "."
+  else if p[1]=count i[0]
+    # show[4]
+    i:each x in i "%s%s" format (x,".") end
+  end end end end
+  # show[p]
+  # show[dp]
+  # print["\n" fuse j[p[0]][p[1]]:"X"]
+  # show[i]
+  # print["---"]
+  if 0=1000000%n
+    print[n]
+  end
+  n:n+1
+end
+
+show["Part 2: %i" format p2]

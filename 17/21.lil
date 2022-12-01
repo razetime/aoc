@@ -1,5 +1,5 @@
 lib:eval[read["lib.lil"]].vars
-i:"%s => %s" parse  -1 drop "\n" split read["inp/21t"]
+i:"%s => %s" parse  -1 drop "\n" split read["inp/21"]
 r:() dict ()
 
 # Do the rotations beforehand
@@ -22,16 +22,14 @@ s:(list 0,1,0),
   (list 1,1,1)
 
 # convenient, array-y way
-on expand g div do
+on spl g div do
   g:each x in g
     (select list value by floor index/div from x).c0
   end
   g:flip each x in flip g 
     (select list value by floor index/div from x).c0
   end
-  raze each x in g
-    each y in flip r@x raze y end
-  end
+  raze g
 end
 
 # second attempt
@@ -39,25 +37,23 @@ on expand1 g div do
   fac:((2,3) dict 3,4)[div]
   # show[fac]
   l:count g
-  ng:(fac*l/div) take list ()
+  ng:(fac*l/div) take list (l*fac) take 0
   gr:0
   while gr<l
     gc:0
+    # print[" %i" format gr]
     while gc<l
       # show[gr,gc]
       # get the window
-      win:0
-      wr:0
-      while wr<div
-        wc:0
-        while wc<div
-          win[wr][wc]:g[wr+gr][wc+gc]
-          wc:wc+1
+      win:each wr in range div
+        each wc in range div
+          g[wr+gr][wc+gc]
+          # win:win,g[wr+gr][wc+gc]
         end
-        wr:wr+1
       end
       # show[win]
       new:r[win]
+      # show[new]
       ngr:0
       while ngr<fac
         ngc:0
@@ -81,19 +77,57 @@ on disp x do
   end
 end
 
+# Part 1
 c:0
-while c<18
-  show[c]
-  if c=5 # part 1
-    print["Part 1: %i" format sum raze s]
-  end
+while c<3
+  # disp[s]
   if 0=2%count s
+  show["type",2]
     s:expand1[s 2]
   else if 0=3%count s
+  show["type",3]
     s:expand1[s 3]
   end end
   c:c+1
+show[sum raze s]
 end
-# show[s]
-disp[s]
-print["Part 2: %i" format sum raze s]
+# disp[s]
+
+s2:(list (list 0,1,0),
+        (list 0,0,1),
+        (list 1,1,1)) dict 1
+r2:() dict ()
+# pra:()
+show[count r]
+each v k i in r
+  # show[i]
+  int1:expand1[v 3]
+  int2:expand1[int1 2]
+  int3:expand1[int2 2]
+  # show[int3]
+  r2[k]:spl[int3 3]
+  # pra:pra,list (list k),list r2[k]
+end
+# show[table pra]
+# show[r2]
+# show[spl[s 3]]
+  
+c:0
+while c<1
+  show[s2]
+  ns:() dict ()
+  each v k in s2
+    each x in r2[k]
+      ns[x]:ns[x]+v
+    end
+  end
+  s2:ns
+  c:c+1
+end
+show[s2]
+p2s:0
+each v k in s2
+  p2s:p2s+v*sum raze k
+end
+# show[s2]
+print["Part 2: %i" p2s]
