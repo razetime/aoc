@@ -1,0 +1,10 @@
+i:input[""]
+
+print["**Lil**, m/n\n"]
+j:"\n" split read["%s.lil" format i]
+print["\n" fuse each x in j "    %s" format x end]
+print[""]
+print["[Lil](https://beyondloom.com/decker/lil.html) is part of the technology that powers [Decker](https://beyondloom.com/decker/), a multimedia creative tool inspired by HyperCard."]
+print["It is a richly multi-paradigm language which incorporates ideas from imperative, functional, declarative, and vector-oriented languages.\n"]
+print[""]
+print["[All solutions so far](https://github.com/razetime/aoc/tree/main/22)"]

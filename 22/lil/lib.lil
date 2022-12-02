@@ -24,4 +24,11 @@ on base x n do
   rev[a]
 end
 
+on sort x do
+  extract value orderby value asc from x
+end
+
+on sortd x do
+  extract value orderby value desc from x
+end
 on mhdist p1 p2 do sum absv[p2-p1] end  

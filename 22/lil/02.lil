@@ -1,0 +1,35 @@
+l:eval[read["lib.lil"]].vars
+i:"%s %s" parse "\n" split -1 drop read["../inp/02"]
+show[i]
+
+# ABC
+# XYZ
+o:("A","B","C") dict 1,2,3
+s:("X","Y","Z") dict 1,2,3
+wins: "AZ","BX","CY"
+p1: sum each x in i
+  out:0
+  if (x~"A","Y")|(x~"B","Z")|x~"C","X"
+    out:6
+  else if o[x[0]]~s[x[1]]
+    out:3
+  end end
+  # show[out,s[x[1]]]
+  out+s[x[1]]
+end
+
+show[p1]
+
+w:("A","B","C") dict 2,3,1
+l:("A","B","C") dict 3,1,2
+p2:sum each x in i
+  if x[1]~"Y"
+    o[x[0]]+3
+  else if x[1]~"X"
+    l[x[0]]
+  else
+    w[x[0]]+6
+  end end
+end
+
+show[p2]

@@ -1,9 +1,0 @@
-i:input[""]
-
-print["**Lil**, m/n\n"]
-print["Lil is part of the technology that powers Decker, a multimedia creative tool inspired by HyperCard."]
-print["It is a richly multi-paradigm language which incorporates ideas from imperative, functional, declarative, and vector-oriented languages.\n"]
-j:"\n" split read["%s.lil" format i]
-print["\n" fuse each x in j "    %s" format x end]
-
-print["[All solutions so far](https://github.com/razetime/aoc/tree/main/22)"]

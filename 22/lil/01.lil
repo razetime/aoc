@@ -1,5 +1,5 @@
 l:eval[read["lib.lil"]].vars
-i:"\n\n" split -1 drop read["inp/01"]
+i:"\n\n" split -1 drop read["../inp/01"]
 
 i:0+each x in i "\n" split x end
 
