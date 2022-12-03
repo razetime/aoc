@@ -1,0 +1,23 @@
+l:eval[read["lib.lil"]].vars
+i:"\n" split -1 drop read["../inp/03"]
+pr:("" split "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ") dict 1 drop range 53
+i2:each x in i
+  x: "" split x
+  l:(count x)/2
+  (list l take x),list l drop x
+end
+
+i3:each x in i2
+  first x[0] take x[1]
+end
+show[sum pr@i3]
+
+ip2:extract list value by floor index/3 from i
+i4:each x in ip2
+  cmn:"" split x[0]
+  each y in x
+    cmn: cmn take "" split y
+  end
+  first cmn
+end
+show[sum pr@i4]

@@ -1,5 +1,6 @@
 # Helper Functions
 # ⟨Split, B2D, _base, Range, Pad, _fix, SR, MatMul⟩ ← •Import "lib.bqn"
+⟨I, D⟩⇐
 
 Split ⇐ ((⊢-˜+`×¬)∘(≡¨)⊔⊢)
 B2D ⇐ {𝕩+2×𝕨}˜´⌽ # Binary to Decimal
@@ -9,3 +10,5 @@ Pad ⇐ {⌽⍉𝕨∾˘𝕩}⍟4
 _fix ⇐ {𝔽∘⊢⍟≢⟜𝔽_𝕣∘⊢⍟≢⟜𝔽𝕩}
 SR ⇐ •Show •Repr
 MatMul ⇐ +˝∘×⎉1‿∞
+I←∊/⊣
+D←¬∘∊/⊣
