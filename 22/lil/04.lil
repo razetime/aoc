@@ -1,0 +1,15 @@
+l:eval[read["lib.lil"]].vars
+i:"%i-%i,%i-%i" parse "\n" split -1 drop read["../inp/04"]
+
+p1: sum each x in i
+  ((x[0]>x[2]-1)&(x[1]<x[3]+1))|(x[2]>x[0]-1)&(x[3]<x[1]+1)
+end
+
+show[p1]
+
+p2: sum each x in i
+  if (x[0]+range 1+x[1]-x[0]) take x[2]+range 1+x[3]-x[2]
+    1
+  else 0 end
+end
+show[p2]
