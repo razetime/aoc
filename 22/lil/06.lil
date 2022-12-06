@@ -1,0 +1,18 @@
+l:eval[read["lib.lil"]].vars
+i:read["../inp/06"]
+
+on pktn i inc do
+  t:1
+  x:inc
+  while t
+    a:inc take x drop i
+    if a="" fuse l.uniq[a]
+      t:0
+    end
+    x:x+1
+  end
+  x+inc-1
+end
+
+show[pktn[i 4]]
+show[pktn[i 14]]
