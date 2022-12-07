@@ -1,0 +1,55 @@
+l:eval[read["lib.lil"]].vars
+i:"\n" split -1 drop read["../inp/07"]
+
+fs:() dict ()
+p:() dict ()
+s:() dict ()
+cd:""
+c:0
+while c<count i
+  cdc:"$ cd %s%m" parse i[c]
+  if last cdc
+    if cdc[0]=".."
+      cd:p[cd]
+    else
+      ncd:"%s/%s" format cd,cdc[0]
+      p[ncd]:cd
+      cd:ncd
+      fs[cd]:() 
+    end
+  else if "$ ls"=i[c]
+    c:c+1
+    while (c<count i)&!"$"=first i[c]
+      if !"dir"=3 take i[c]
+        dts:"%i %s" parse i[c]
+        nd: "%s/%s" format cd,dts[1]
+        s[nd]:dts[0]
+        fs[cd]:fs[cd],nd
+      else
+        fs[cd]:fs[cd],"%s/%s" format cd,4 drop i[c]
+      end
+      c:c+1
+    end
+    c:c-1
+  end end
+  c:c+1
+end
+
+on sized dir fs p s do
+  if s[dir]
+    s[dir]
+  else
+    sum each x in fs[dir]
+      sized[x fs p s]
+    end
+  end
+end
+chk:range fs
+p1:each x in chk
+  sized[x fs p s]
+end
+show[sum p1*p1<100001]
+
+ds:chk dict p1
+un:30000000-70000000-ds["//"]
+show[min extract value where value>un from ds]
