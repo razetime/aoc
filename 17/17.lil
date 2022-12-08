@@ -1,4 +1,4 @@
-# lib:eval[read["lib.lil"]].vars
+# lib:eval[read["../../lib.lil"]].vars
 i:382
 
 a:list 0

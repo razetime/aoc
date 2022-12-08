@@ -1,0 +1,35 @@
+l:eval[read["../../lib.lil"]].vars
+i:"\n" split -1 drop read["../inp/08"]
+i:each x in i "%i" parse "" split x end
+
+lr:count i
+lc:count i[0]
+p1:each r in range i
+  each c in range first i
+    cu: i[r][c]
+    b:(r=0)|(r=lr-1)|(c=0)|(c=lc-1)
+    b:b|min each x in 1+r+range lr-r+1 i[x][c]<cu end
+    b:b|min each x in range r          i[x][c]<cu end
+    b:b|min each x in 1+c+range lc-c+1 i[r][x]<cu end
+    b:b|min each x in range c          i[r][x]<cu end
+    b
+  end
+end
+show[sum raze p1]
+
+tlc:lc
+p2:each r in range i
+  each c in range first i
+    cu: i[r][c]
+    d:1 dc:r+1
+    while (dc<lr-1)&i[dc][c]<cu  d:d+1 dc:dc+1 end
+    u:1 uc:r-1
+    while (uc>0)&i[uc][c]<cu     u:u+1 uc:uc-1 end
+    ri:1 rc:c+1
+    while (rc<tlc-1)&i[r][rc]<cu ri:ri+1 rc:rc+1 end
+    l:1 lc:c-1
+    while (lc>0)&i[r][lc]<cu     l:l+1 lc:lc-1 end
+    d*u*ri*l*!(r=0)|(r=lr-1)|(c=0)|(c=tlc-1)
+  end
+end
+show[max raze p2]

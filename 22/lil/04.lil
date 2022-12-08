@@ -1,4 +1,4 @@
-l:eval[read["lib.lil"]].vars
+l:eval[read["../../lib.lil"]].vars
 i:"%i-%i,%i-%i" parse "\n" split -1 drop read["../inp/04"]
 
 p1: sum each x in i

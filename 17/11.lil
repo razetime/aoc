@@ -1,4 +1,4 @@
-lib:eval[read["lib.lil"]].vars
+lib:eval[read["../../lib.lil"]].vars
 io:-1 drop read["inp/11"]
 # io:"ne,ne,ne"
 # io:"ne,ne,sw,sw"

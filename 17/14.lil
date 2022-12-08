@@ -1,4 +1,4 @@
-lib:eval[read["lib.lil"]].vars
+lib:eval[read["../../lib.lil"]].vars
 # Part 1:
 i:"nbysizxe"
 

@@ -1,4 +1,4 @@
-lib:eval[read["lib.lil"]].vars
+lib:eval[read["../../lib.lil"]].vars
 
 i:-1 drop "\n" split read["inp/13"]
 i:"%i: %i" parse i

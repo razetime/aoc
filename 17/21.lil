@@ -1,4 +1,4 @@
-lib:eval[read["lib.lil"]].vars
+lib:eval[read["../../lib.lil"]].vars
 i:"%s => %s" parse  -1 drop "\n" split read["inp/21"]
 r:() dict ()
 

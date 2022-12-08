@@ -1,4 +1,4 @@
-l:eval[read["lib.lil"]].vars
+l:eval[read["../../lib.lil"]].vars
 i:-1 drop "\n" split read["inp/22"]
 i2:i
 on turn p b do

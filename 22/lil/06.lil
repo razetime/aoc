@@ -1,4 +1,4 @@
-l:eval[read["lib.lil"]].vars
+l:eval[read["../../lib.lil"]].vars
 i:read["../inp/06"]
 
 on pktn i inc do

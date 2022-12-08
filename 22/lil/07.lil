@@ -1,4 +1,4 @@
-l:eval[read["lib.lil"]].vars
+l:eval[read["../../lib.lil"]].vars
 i:"\n" split -1 drop read["../inp/07"]
 
 fs:() dict ()

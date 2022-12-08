@@ -1,4 +1,4 @@
-lib:eval[read["lib.lil"]].vars
+lib:eval[read["../../lib.lil"]].vars
 i:table "%24s%i" parse -1 drop "\n" split read["inp/15"]
 
 # This is just a massive drag. both parts are incredibly slow.

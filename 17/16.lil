@@ -1,4 +1,4 @@
-lib:eval[read["lib.lil"]].vars
+lib:eval[read["../../lib.lil"]].vars
 i:"," split -1 drop  read["inp/16"]
 os:s:"abcdefghijklmnop"
 
