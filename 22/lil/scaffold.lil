@@ -1,0 +1,6 @@
+each x in 5 drop 1+range 25
+  n:"%02i.lil" format x
+  s:"l:eval[read[\"lib.lil\"]].vars
+i:\"\\n\" split -1 drop read[\"../inp/%02i\"]" format x
+  write[n s]
+end
