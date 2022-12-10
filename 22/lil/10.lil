@@ -1,0 +1,20 @@
+l:eval[read["../../lib.lil"]].vars
+i:"\n" split -1 drop read["../inp/10"]
+i:"%s %i" parse i
+
+c:0
+X:1
+s:0
+g:6 take list 40 take list " "
+each x in i
+  nc:(("addx","noop") dict 2,1)[x[0]]
+  each y in range nc
+    c:c+1
+    if 0=40%c-20 s:s+c*X end
+    if (40%c) in X+range 3 g[floor c/40][40%c]:"#" end
+    if y=1 X:X+x[1] end
+  end
+end
+
+show[s]
+print["\n" fuse each x in g "" fuse x end]
