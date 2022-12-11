@@ -1,4 +1,4 @@
-l←•Import "lib.bqn"
+l←•Import "../../lib.bqn"
 i←•FChars "../inp/06"
 
 PktN←{𝕨+⊑1⊐˜(∧´∊)˘𝕨↕𝕩}

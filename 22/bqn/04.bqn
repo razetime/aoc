@@ -1,4 +1,4 @@
-l←•Import "lib.bqn"
+l←•Import "../../lib.bqn"
 i←•FLines "../inp/04"
 i↩{•BQN¨¨'-'l.Split¨','l.Split𝕩}¨i
 

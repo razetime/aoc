@@ -1,4 +1,4 @@
-l←•Import "lib.bqn"
+l←•Import "../../lib.bqn"
 i←0‿2⊸⊏¨•FLines "../inp/02"
 
 P1R←{
