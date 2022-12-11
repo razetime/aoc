@@ -38,3 +38,9 @@ end
 on mhdist p1 p2 do sum absv[p2-p1] end  
 
 on id x do x end
+
+on prod x do
+  r:1
+  each y in x r:r*y end
+  r
+end

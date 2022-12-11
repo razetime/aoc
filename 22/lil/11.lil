@@ -1,2 +1,53 @@
 l:eval[read["../../lib.lil"]].vars
-i:"\n" split -1 drop read["../inp/11"]
+i:"\n\n" split -1 drop read["../inp/11"]
+fmt:"Monkey %i:
+  Starting items: %s
+  Operation: new = %s
+  Test: divisible by %i
+    If true: throw to monkey %i
+    If false: throw to monkey %i"
+i:each x in i 
+  a:fmt parse x
+  a[1]:eval[a[1]].value
+  ("items","op","test","t","f") dict 1 drop a
+end
+
+i1:i
+times:20
+while times
+  each ind in range i1
+    x:i1[ind]
+    estr:("(%s)" format "," fuse x.items) fuse "old" split x.op
+    old:eval[estr].value
+    old:floor old/3
+    tst:0=x.test%old
+    i1[x.t].items:i1[x.t].items,extract value where 0=x.test%value from old
+    i1[x.f].items:i1[x.f].items,extract value where x.test%value from old
+    i1[ind].items:()
+    i1[ind].ins:i1[ind].ins+count old
+  end
+  times:times-1
+end
+p1:l.prod[-2 take l.sort[i1..ins]]
+show[p1]
+
+i2:i
+mod:l.prod[i2..test]
+times:10000
+while times
+  each ind in range i2
+    x:i2[ind]
+    estr:("(%s)" format "," fuse x.items) fuse "old" split x.op
+    old:mod%eval[estr].value
+    tst:0=x.test%old
+    i2[x.t].items:i2[x.t].items,extract value where 0=x.test%value from old
+    i2[x.f].items:i2[x.f].items,extract value where x.test%value from old
+    i2[ind].items:()
+    i2[ind].ins:i2[ind].ins+count old
+  end
+  if 0=1000%times show[times] end
+  times:times-1
+end
+
+p2:l.prod[-2 take l.sort[i2..ins]]
+show[p2]
