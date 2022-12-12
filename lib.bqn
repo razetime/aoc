@@ -1,5 +1,5 @@
 # Helper Functions
-⟨Split, B2D, _base, Range, Pad, _fix, SR, MatMul, I, D, Dec, nl⟩⇐
+⟨Split, B2D, _base, Range, Pad, _fix, SR, MatMul, I, D, Dec, nl, Fi⟩⇐
 
 Split←((⊢-˜+`×¬)∘(≡¨)⊔⊢)
 B2D←{𝕩+2×𝕨}˜´⌽ # Binary to Decimal
@@ -13,3 +13,4 @@ I←∊/⊣
 D←¬∘∊/⊣
 Dec←10⊸×⊸+˜´∘⌽-⟜'0'
 nl←@+10
+Fi←⊢/○⥊↕∘≢

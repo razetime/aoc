@@ -1,2 +1,42 @@
+# Many thanks to hyperneutrino for helpig me out with this one.
 l:eval[read["../../lib.lil"]].vars
 i:"\n" split -1 drop read["../inp/12"]
+i:each x in i "%a" parse x end
+
+start:0
+en:0
+qp2:()
+each j x in i
+  each k y in j
+    if k=83 qp2[count qp2]:start:x,y i[x][y]:97 end
+    if k=97 qp2[count qp2]:x,y end
+    if k=69 en:x,y  i[x][y]:122 end
+  end
+end
+qp1:list start
+
+on bfsdist q i en do
+  vis:i*0
+  r:0
+  over:0
+  while (count q)&!over
+    curr:2 take first q
+    score:last first q
+    if curr~en
+      r:score
+      over:1
+    end
+    q:1 drop q
+    each x in (list curr+0,1),(list curr+1,0),(list curr+0,-1),(list curr+-1,0)
+      d:i[x[0]][x[1]]-i[curr[0]][curr[1]]
+      if (!!i[x[0]][x[1]])&(d<2)&!vis[x[0]][x[1]]
+        q[count q]:x,score+1
+        vis[x[0]][x[1]]:1
+      end
+    end
+  end
+  r
+end
+
+show[bfsdist[qp1 i en]]
+show[bfsdist[qp2 i en]]
