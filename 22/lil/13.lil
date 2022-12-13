@@ -1,2 +1,45 @@
 l:eval[read["../../lib.lil"]].vars
-i:"\n" split -1 drop read["../inp/13"]
+i: "\n\n" split -1 drop read["../inp/13"]
+i: each x in i "%j" parse "\n" split x end
+
+on cmp l r do
+  if ("number"=typeof l)&"number"=typeof r
+    (l<r),l=r
+  else if ("list"=typeof l)|"list"=typeof r
+    if l~r
+      0,1
+    else if l~()
+      1,0
+    else if r~()
+      0,0
+    else
+      res:cmp[first l first r]
+      if res[1]
+        cmp[1 drop l 1 drop r]
+      else
+        res
+      end
+    end end end
+  end end
+end
+
+p1:each x ind in i
+  res:first cmp[x[0] x[1]]
+  res*ind+1
+end
+show[sum p1]
+
+ip2:(raze i),"%j" parse "[[[2]],[[6]]]"
+each x in range ip2
+  each y in range ip2
+    if first cmp[ip2[x] ip2[y]]
+      tmp:ip2[x]
+      ip2[x]:ip2[y]
+      ip2[y]:tmp
+    end
+  end
+end
+p2:each x ind in ip2
+  (ind+1)^(x~list list 2)|x~list list 6
+end
+show[l.prod[p2]]

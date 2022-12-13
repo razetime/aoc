@@ -44,3 +44,37 @@ on prod x do
   each y in x r:r*y end
   r
 end
+
+on quicksort l c do # takes an array interface.
+  quicksort_[l c 0 -1+count l]
+end
+
+on quicksort_ l c lo hi do
+  if ((lo+1)>hi)|lo<0
+    ()
+  else
+    p:qs_partition[l lo hi]
+    quicksort_[l lo p-1]
+    quicksort_[l p+1 hi]
+  end
+end
+
+on qs_partition l lo hi do
+  pivot:l[hi]
+  i:lo-1
+  j:lo
+  while j<hi
+    if l[j]<pivot+1
+      i:i+1
+      tmp:l[i]
+      l[i]:l[j]
+      l[j]:tmp
+    end
+    j:j+1
+  end
+  i:i+1
+  tmp:l[i]
+  l[i]:l[hi]
+  l[hi]:tmp
+  i
+end
