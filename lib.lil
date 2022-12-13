@@ -45,7 +45,7 @@ on prod x do
   r
 end
 
-on quicksort l c do # takes an array interface.
+on quicksort l c do 
   quicksort_[l c 0 -1+count l]
 end
 
