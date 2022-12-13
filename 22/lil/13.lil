@@ -6,19 +6,13 @@ on cmp l r do
   if ("number"=typeof l)&"number"=typeof r
     (l<r),l=r
   else if ("list"=typeof l)|"list"=typeof r
-    if l~r
-      0,1
-    else if l~()
-      1,0
-    else if r~()
-      0,0
+    if l~r 0,1
+    else if l~() 1,0
+    else if r~() 0,0
     else
       res:cmp[first l first r]
-      if res[1]
-        cmp[1 drop l 1 drop r]
-      else
-        res
-      end
+      if res[1] cmp[1 drop l 1 drop r]
+      else res end
     end end end
   end end
 end
