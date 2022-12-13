@@ -30,15 +30,7 @@ end
 show[sum p1]
 
 ip2:(raze i),"%j" parse "[[[2]],[[6]]]"
-each x in range ip2
-  each y in range ip2
-    if first cmp[ip2[x] ip2[y]]
-      tmp:ip2[x]
-      ip2[x]:ip2[y]
-      ip2[y]:tmp
-    end
-  end
-end
+ip2:l.quicksort[ip2 on c x y do first cmp[x y] end]
 p2:each x ind in ip2
   (ind+1)^(x~list list 2)|x~list list 6
 end

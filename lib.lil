@@ -50,21 +50,24 @@ on quicksort l c do # takes an array interface.
 end
 
 on quicksort_ l c lo hi do
-  if ((lo+1)>hi)|lo<0
-    ()
-  else
-    p:qs_partition[l lo hi]
-    quicksort_[l lo p-1]
-    quicksort_[l p+1 hi]
+  show[lo,hi]
+  if !((lo+1)>hi)|lo<0
+    # show[l]
+    p:qs_partition[l lo hi c]
+    l:p[0]
+    # show[p]
+    l:quicksort_[l c lo p[1]-1]
+    l:quicksort_[l c p[1]+1 hi]
   end
+  l
 end
 
-on qs_partition l lo hi do
+on qs_partition l lo hi c do
   pivot:l[hi]
   i:lo-1
   j:lo
   while j<hi
-    if l[j]<pivot+1
+    if c[l[j] pivot]
       i:i+1
       tmp:l[i]
       l[i]:l[j]
@@ -76,5 +79,5 @@ on qs_partition l lo hi do
   tmp:l[i]
   l[i]:l[hi]
   l[hi]:tmp
-  i
+  (list l),list i
 end
