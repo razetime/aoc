@@ -1,2 +1,102 @@
 l:eval[read["../../lib.lil"]].vars
 i:"\n" split -1 drop read["../inp/14"]
+i: each x in i
+  each y in (" -> " split x)
+    0+"," split y
+  end
+end
+mini:(first min raze i),0
+maxi:(max raze i)-mini
+
+grid: (maxi[1]+1) take list (maxi[0]+1) take list "."
+i:each x in i each y in x y-mini end end
+
+on sgrid x do
+  print["\n" fuse each y in x
+    "" fuse y
+  end]
+end
+each x in i
+  each y ind in 1 drop x
+    st:x[ind]
+    dl:l.vsgn[y-st]
+    while !st~y
+      grid[st[1]][st[0]]:"#"
+      st:st+dl
+    end
+    grid[st[1]][st[0]]:"#"
+  end
+end
+
+run:1
+while run
+  srun:1
+  sand:(500,0)-mini
+  while srun
+    dw:sand+0,1
+    dl:sand+-1,1
+    dr:sand+1,1
+    if grid[dw[1]][dw[0]]="."
+      sand:dw
+    else if grid[dl[1]][dl[0]]="."
+      sand:dl
+    else if grid[dr[1]][dr[0]]="."
+      sand:dr
+    else
+      srun:0
+    end end end
+    if (grid[dw[1]][dw[0]]=0)|(grid[dr[1]][dr[0]]=0)|(grid[dl[1]][dl[0]]=0)
+      srun:0
+      run:0
+    end
+  end
+  if run
+    grid[sand[1]][sand[0]]:"o"
+  end
+end
+show[sum raze grid="o"]
+
+fac:7
+maxi:(fac*maxi*1,0)+maxi+0,2
+grid: (maxi[1]+1) take list (maxi[0]+1) take list "."
+ydl:((floor maxi[0]/3),0)
+i:each x in i each y in x ydl+y end end
+each x in i
+  each y ind in 1 drop x
+    st:x[ind]
+    dl:l.vsgn[y-st]
+    while !st~y
+      grid[st[1]][st[0]]:"#"
+      st:st+dl
+    end
+    grid[st[1]][st[0]]:"#"
+  end
+end
+grid[(count grid)-1]:(count grid[(count grid)-1]) take list "#"
+run:1
+while run
+  srun:1
+  sand:ydl+(500,0)-mini
+
+  while srun
+    dw:sand+0,1
+    dl:sand+-1,1
+    dr:sand+1,1
+    if grid[sand[1]][sand[0]]="o"
+      srun:0
+      run:0
+    else if grid[dw[1]][dw[0]]="."
+      sand:dw
+    else if grid[dl[1]][dl[0]]="."
+      sand:dl
+    else if grid[dr[1]][dr[0]]="."
+      sand:dr
+    else
+      srun:0
+    end end end
+  end
+  if run
+    grid[sand[1]][sand[0]]:"o"
+  end
+end
+show[sum raze grid="o"]

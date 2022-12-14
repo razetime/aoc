@@ -81,3 +81,12 @@ on qs_partition l lo hi c do
   l[hi]:tmp
   (list l),list i
 end
+
+
+on filter f l do
+  i:0
+  r:()
+  while i<count l if f[l[i]] r[count r]:l[i] end end
+  r
+end
+
