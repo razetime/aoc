@@ -1,2 +1,51 @@
 l:eval[read["../../lib.lil"]].vars
-i:"\n" split -1 drop read["../inp/15"]
+i:"Sensor at x=%i, y=%i: closest beacon is at x=%i, y=%i" parse "\n" split -1 drop read["../inp/15"]
+
+pts:raze each x in i
+  (list 2 take x),list 2 drop x
+end
+sens:() dict ()
+bcn:() dict ()
+each x in i
+  sens[2 take x]:l.mhdist[2 take x 2 drop x]
+  bcn[2 take x]:2 drop x
+end
+
+y:2000000
+on p1 y do 
+  int:()
+  each pt in range sens
+    t:sens[pt]-l.abs[pt[1]-y]
+    if t>-1
+      int[count int]:pt[0]+(-t),t
+    end
+  end
+  extract value orderby value.[0] asc from int
+end
+int:p1[y]
+sm:0
+mx:int[0][0]
+each i in int
+  if mx<i[1]
+    sm:sm+1+i[1]-max i[0],mx
+    mx:i[1]+1
+  end
+end
+nbc:sum y=l.uniq[extract value from bcn].[1]
+show[sm-nbc]
+
+# pretty bearable bruteforce, with a counter
+y:0
+while y<4000001
+  if 0=500000%y show[y] end
+  ints:p1[y]
+  mx:ints[0][0]
+  each x in ints
+    if 2=x[0]-mx
+      show[y+4000000*x[0]-1]
+      exit[]
+    end
+    mx:max mx,x[1]
+  end
+  y:y+1
+end
