@@ -1,2 +1,66 @@
 l:eval[read["../../lib.lil"]].vars
-i:"\n" split -1 drop read["../inp/18"]
+i:"%i,%i,%i" parse "\n" split -1 drop read["../inp/18"]
+
+dim:1+max i
+xn:dim[0]
+yn:dim[1]
+zn:dim[2]
+grid:zn take list yn take list xn take list 0
+each pt in i
+  grid[pt[2]][pt[1]][pt[0]]:1
+end
+on sa grid do
+  zn:count grid
+  yn:count grid[0]
+  xn:count grid[0][0]
+  sum raze raze each z in range zn
+    each y in range yn
+      each x in range xn
+        sm:grid[z+1][y][x]+
+            grid[z-1][y][x]+
+            grid[z][y+1][x]+
+            grid[z][y-1][x]+
+            grid[z][y][x+1]+
+            grid[z][y][x-1]
+        grid[z][y][x]*6-sm
+      end
+    end
+  end
+end
+show[sa[grid]]
+
+grid2:(zn+4) take list (yn+4) take list (xn+4) take list 0
+each pt in i
+  grid2[2+pt[2]][2+pt[1]][2+pt[0]]:1
+end
+
+on fill grid do
+  zn:count grid
+  yn:count grid[0]
+  xn:count grid[0][0]
+  q:list 0,0,0
+  grid[0][0][0]:1
+  while q
+    c:q[0]
+    q:1 drop q
+    x:c[0] y:c[1] z:c[2]
+    each pt in (list (x+1),y,z),
+               (list (x-1),y,z),
+               (list x,(y+1),z),
+               (list x,(y-1),z),
+               (list x,y,z+1),
+                list x,y,z-1
+      if (!grid[pt[2]][pt[1]][pt[0]])&
+         (pt[2]>-1)&(pt[1]>-1)&(pt[0]>-1)&
+         (pt[2]<zn)&(pt[1]<yn)&(pt[0]<xn)
+        grid[pt[2]][pt[1]][pt[0]]:1
+        q:q,list pt
+      end
+    end
+    # show[q]
+  end
+  grid
+end
+
+p2g:grid2|!fill[grid2]
+show[sa[p2g]]
