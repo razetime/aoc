@@ -1,2 +1,56 @@
 l:eval[read["../../lib.lil"]].vars
-i:"\n" split -1 drop read["../inp/22"]
+i:"\n\n" split -1 drop read["../inp/22"]
+
+g:"\n" split i[0]
+g: each x in g "" split x end
+p1d:d:i[1]
+# show[g]
+rb:each r in g
+  extract (first index),last index where !value=" " from r
+end
+cb:each c in flip g
+  extract (first index),last index where (!value=" ")&!value=0 from c
+end
+# show[rb]
+# show[cb]
+on sg x do each y in x print["" fuse y] end end
+sr:rb.[0]
+er:rb.[1]
+sc:cb.[0]
+ec:cb.[1]
+dirr:0,1,0,-1
+dirc:1,0,-1,0
+diri:0
+mr:0
+mc:first sr
+# while p1d
+#   mv:"%i" parse p1d
+#   p1d:(count "%s" format mv) drop p1d
+#   while mv
+#     nr:mr
+#     nc:mc
+#     if dirr[diri]
+#       nr:mr+dirr[diri]
+#       nr:sc[mc]+(1+ec[mc]-sc[mc])%(nr-sc[mc])
+#     end
+#     if dirc[diri]
+#       nc:mc+dirc[diri]
+#       nc:sr[mr]+(1+er[mr]-sr[mr])%(nc-sr[mr])
+#     end
+#     if g[nr][nc]="#"
+#       mv:1
+#     else
+#       mr:nr
+#       mc:nc
+#     end
+#     mv:mv-1
+#   end
+#   if p1d
+#     diri:4%diri+-1^"L"=p1d[0]
+#   end
+#   p1d: 1 drop p1d
+# end
+# show[(1000*1+mr)+(4*1+mc)+diri]
+
+fac:4
+# while d

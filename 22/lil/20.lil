@@ -1,2 +1,30 @@
 l:eval[read["../../lib.lil"]].vars
-i:"\n" split -1 drop read["../inp/20"]
+i:"%i" parse "\n" split -1 drop read["../inp/20"]
+on mix i ind do
+  act:i
+  l:count i
+  each x in range i
+    kin:extract index where x=value from ind
+    mva:act[kin]
+    mv:(l-1)%kin+mva
+    act:(kin take act),(kin+1) drop act
+    ind:(kin take ind),(kin+1) drop ind
+    act:(mv take act),mva,mv drop act
+    ind:(mv take ind),x,mv drop ind
+  end
+  ("act","ind") dict (list act),list ind
+end
+on res x do
+  ri:extract index where 0=value from x.act
+  show[sum x.act@(count x.act)%ri+1000,2000,3000]
+end
+res[mix[i range i]]
+
+st2:("act","ind") dict (list 811589153*i),list range i
+n:10
+while n
+  show[n]
+  st2:mix[st2.act st2.ind]
+  n:n-1
+end
+res[st2]

@@ -1,2 +1,83 @@
 l:eval[read["../../lib.lil"]].vars
 i:"\n" split -1 drop read["../inp/23"]
+
+chk:"%j" parse "[[[-1,-1],[-1,0],[-1,1]],
+  [[1,-1],[1,0],[1,1]],
+  [[-1,-1],[0,-1],[1,-1]],
+  [[-1,1],[0,1],[1,1]]
+]"
+pd:"%j" parse "[[-1,0],[1,0],[0,-1],[0,1]]"
+nbs:l.uniq[raze chk]
+
+on pa x y do
+  each z in y x+z end
+end
+# on idx x y do
+#   each z in y x[z[0]][z[1]] end
+# end
+on plt pts do
+  g:(1+max pts.[0]) take list (1+max pts.[1]) take "."
+  # show[g]
+  each x in pts
+    g[x[0]][x[1]]:"#"
+  end
+  each x in g print[x] end
+  print["---"]
+end
+
+
+pts:()
+each r in range i
+  each c in range i[0]
+    if i[r][c]="#"
+      pts:pts,list r,c
+    end
+  end
+end
+# show[pts]
+ppts:()
+niters:0
+while !ppts~pts
+# each _ in range 10
+  if niters=10
+    wh:1+(max pts)-min pts
+    print["Part 1: %i" format (wh[0]*wh[1])-count pts]
+  end
+  ppts:pts
+  d:() dict ()
+  ptst:()
+  each x in pts
+    if pts take pa[x nbs]
+      chi:0
+      while chi<count chk
+        if 0=count pts take pa[x chk[chi]]
+          np:x+pd[chi]
+          d[np]:(() unless d[np]),list x
+          chi:9999
+        end
+        chi:chi+1
+      end
+      if !chi=10000
+        ptst:ptst,list x
+      end
+    else 
+      ptst:ptst,list x
+    end
+  end
+  chk:(1 drop chk),1 take chk
+  pd:(1 drop pd),1 take pd
+
+  each val key in d
+    if 1=count val
+      ptst:ptst,list key
+    else
+      ptst:ptst,val
+    end
+  end
+  pts:ptst
+  show[niters]
+  0
+  niters:niters+1
+end
+
+print["Part 2: %i" format niters]

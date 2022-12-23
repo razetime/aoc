@@ -1,2 +1,49 @@
 l:eval[read["../../lib.lil"]].vars
 i:"\n" split -1 drop read["../inp/21"]
+d:() dict ()
+each x in i
+  prs:"%s: %i%m" parse x
+  if prs[2]
+    d[prs[0]]:prs[1]
+  else
+    prs:"%s: %s %s %s" parse x
+    d[prs[0]]:1 drop prs
+  end
+end
+op:"+-*/" dict on add x y do x+y end,
+  on sub x y do x-y end,
+  on mul x y do x*y end,
+  on div x y do x/y end
+
+on get d key do
+  r:d[key]
+  if 1=count r
+    r
+  else if (r[0]="x")|r[2]="x"
+    "x"
+  else
+    op[r[1]][get[d r[0]] get[d r[2]]]
+  end end
+end
+p1:get[d "root"]
+show[p1]
+
+d.root[1]:"-"
+on try_n d n do
+  d.humn:n
+  get[d "root"]
+end
+
+g:0
+done:0
+while !done
+  re:try_n[d g]
+  print["%f -> %f" format g,re]
+  done:re=0
+  del:try_n[d g+4]
+  g:floor g+(re*4)/re-del
+end
+show[g]
+
+
+  
