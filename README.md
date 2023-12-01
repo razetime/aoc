@@ -11,8 +11,11 @@ Inputs are not given since they are not open source.
 2020: APL
 2021: BQN
 2022: Lil, BQN
+2023: Maude
 
 Mercury: use mmc --make <insert program name without .m>
 Lil: lilt <filename>
+Maude: maude -trust <filename>
+erew run . *** (might be different for some days)
 
 ```
