@@ -1,0 +1,45 @@
+in file.maude .
+
+omod SLURP is
+  ex FILE .
+  ex LIST*{String} .
+
+  class Me | Acc : String .
+  op me : -> Oid .
+  op run_ : String -> Configuration .
+  var fname : String .
+  var As : AttributeSet .
+  var sfil : Oid .
+  var X Y Z : String .
+  var acc : String .
+  var line : String .
+  var garbage : String .
+  op getstr : Object -> String .
+  var out : String .
+  var N : Nat .
+  op slurp_ : String -> String .
+  op ssplit : String String -> List{String} .
+  op sp1 : String Nat -> List{String} .
+  op sp3 : List{String} String -> List{String} .
+  op fln : String -> List{String} .
+
+  eq sp1(X, notFound) = X "" .
+  eq sp1(X, N) = substr(X , 0 , N) substr(X, N + 1 , length(X)) . 
+  eq sp3(X Y,Z) = append([X], ssplit(Y,Z)) .
+  eq ssplit("", Y) = [] .
+  eq ssplit(X, Y) = sp3(sp1(X, find(X,Y,0)),Y) . 
+
+  eq fln(X) = ssplit(slurp X,"\n") .
+  eq getstr( < me : Me | Acc : out > ) = out .
+  eq slurp fname = getstr(run fname) .
+  eq run fname = <>
+  < me : Me | Acc : "" > openFile(fileManager, me, fname, "r") .
+  rl < me : Me | As > openedFile(me, fileManager, sfil) =>
+    < me : Me | As > getLine(sfil, me) .
+  rl < me : Me | Acc : acc, As > gotLine(me, sfil, line) =>
+    < me : Me | Acc : acc + line, As >
+    if line == "" then closeFile(sfil, me) else getLine(sfil,me) fi . 
+  rl < me : Me | As > fileError(me, sfil, garbage) =>
+    < me : Me | Acc : garbage, As > closeFile(sfil, me) .
+  rl <> < me : Me | As > closedFile(me, sfil) => < me : Me | As > .
+endom

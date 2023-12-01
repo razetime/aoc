@@ -1,0 +1,61 @@
+in lib.maude .
+
+mod 01 is
+  pr SLURP .
+  ex LIST*{Nat} .
+  op spr : List{String} -> List{Nat} .
+  op run : -> List{Nat} .
+  op sns : String String -> List{Nat} .
+  op sns1 : String -> List{Nat} .
+  op dfl : List{Nat} -> Nat .
+  op fl : List{String} -> Nat .
+  var X Y Z : String .
+  var N : Nat .
+  var L : List{String} . 
+  var Ln : List{Nat} .
+   
+  *** Part 1 
+  eq sns(X,Y) = if X <= "9" and X >= "0" 
+    then append([sd(ascii(X),ascii("0"))], sns1(Y))
+    else sns1(Y) fi .
+  eq sns1("") = [] .
+  eq sns1(X) = sns(substr(X,0,1), substr(X,1,length(X))) .
+  eq dfl(Ln) = head(Ln) * 10 + last(Ln) .
+  eq fl([]) = 0 .
+  eq fl(L) = dfl(sns1(head(L))) + fl(tail(L)) .
+
+  *** Part 2
+  op sn : String -> List{Nat} .
+  op fl2 : List{String} -> Nat .
+  eq sn("") = [] .
+  eq sn(X) = if find(X,"zero",0) == 0 then 
+       append([0],sn(substr(X,4,length(X)))) else
+     if find(X,"one",0) == 0 then
+       append([1],sn(substr(X,3,length(X)))) else
+     if find(X,"two",0) == 0 then
+       append([2],sn(substr(X,3,length(X)))) else
+     if find(X,"three",0) == 0 then
+       append([3],sn(substr(X,5,length(X)))) else
+     if find(X,"four",0) == 0 then
+       append([4],sn(substr(X,4,length(X)))) else
+     if find(X,"five",0) == 0 then
+       append([5],sn(substr(X,4,length(X)))) else
+     if find(X,"six",0) == 0 then
+       append([6],sn(substr(X,3,length(X)))) else
+     if find(X,"seven",0) == 0 then
+       append([7],sn(substr(X,5,length(X)))) else
+     if find(X,"eight",0) == 0 then
+       append([8],sn(substr(X,5,length(X)))) else
+     if find(X,"nine",0) == 0 then
+       append([9],sn(substr(X,4,length(X)))) else
+     if substr(X,0,1) >= "0" and substr(X,0,1) <= "9" then
+       append([sd(ascii(substr(X,0,1)),ascii("0"))],
+         sn(substr(X,1,length(X)))) else
+       sn(substr(X,1,length(X)))
+     fi fi fi fi fi fi fi fi fi fi fi .
+  eq fl2([]) = 0 .
+  eq fl2(L) = dfl(sn(head(L))) + fl2(tail(L)) . 
+ 
+  eq spr(L) = [fl(L) fl2(L)] .
+  eq run = spr(fln("./../../23/inp/01")) .
+endm
