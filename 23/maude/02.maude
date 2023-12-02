@@ -1,0 +1,63 @@
+in lib.maude .
+
+mod 02-1 is
+  pr SLURP .
+  pr CONVERSION .
+  ex LIST*{Nat} .
+  ex MAP{String,Nat} .
+  op run : -> Nat .
+  op eln : List{String} -> Nat .
+  op p1c : -> Map{String,Nat} . 
+  op chk : List{String} -> Nat .
+  op any : List{String} -> Bool .
+  op any1 : List{String} -> Bool .
+  op any2 : List{String} -> Bool .
+  op id : List{String} -> Nat .
+  var X : String .
+  var Ls : List{String} .
+  var N : Nat .
+  
+  eq p1c = ("red" |-> 12, "green" |-> 13, "blue" |-> 14) .
+  eq any([]) = true .
+  eq any(Ls) = if any1(ssplit(head(Ls),", "))
+    then any(tail(Ls)) else false fi .
+  eq any1([]) = true .
+  eq any1(Ls) = if any2(ssplit(head(Ls)," "))
+    then any1(tail(Ls)) else false fi .
+  eq any2(Ls) = rat(head(Ls),10) <= p1c[last(Ls)] .
+  eq id(Ls) = rat(last(Ls),10) .
+  eq chk(Ls) = if any(ssplit(last(Ls),"; "))
+    then id(ssplit(head(Ls)," ")) else 0 fi .
+  eq eln([]) = 0 .
+  eq eln(Ls) = chk(ssplit(head(Ls),": ")) + eln(tail(Ls)) .
+  eq run = eln(fln("../inp/02.txt")) . 
+endm
+
+mod 02-2 is
+  pr SLURP .
+  pr CONVERSION .
+  ex LIST*{Nat} .
+  ex MAP{String,Nat} .
+  op run : -> Nat .
+  op eln : List{String} -> Nat .
+  op chk : List{String} -> Nat .
+  op pow : List{String} Map{String,Nat} -> Nat .
+  op pow1 : List{String} Map{String,Nat} -> Map{String,Nat} .
+  op pow2 : List{String} Map{String,Nat} -> Map{String,Nat} .
+  op id : List{String} -> Nat .
+  var X : String .
+  var Ls : List{String} .
+  var N : Nat .
+  var M : Map{String,Nat} .
+  
+  eq pow2(Ls,M) = insert(last(Ls),max(rat(head(Ls),10), M[last(Ls)]),M) .
+  eq pow1([],M) = M .
+  eq pow1(Ls,M) = pow1(tail(Ls),pow2(ssplit(head(Ls)," "),M)) .
+  eq pow([],M) = M["red"] * M["blue"] * M["green"] .
+  eq pow(Ls,M) = pow(tail(Ls),pow1(ssplit(head(Ls),", "),M)) .
+  eq chk(Ls) = pow(ssplit(last(Ls),"; "),
+    ("red" |-> 1, "green" |-> 1, "blue" |-> 1)) .
+  eq eln([]) = 0 .
+  eq eln(Ls) = chk(ssplit(head(Ls),": ")) + eln(tail(Ls)) .
+  eq run = eln(fln("../inp/02.txt")) . 
+endm

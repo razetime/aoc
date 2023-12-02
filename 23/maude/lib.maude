@@ -3,6 +3,7 @@ in file.maude .
 omod SLURP is
   ex FILE .
   ex LIST*{String} .
+  pr SPLIT .
 
   class Me | Acc : String .
   op me : -> Oid .
@@ -16,18 +17,9 @@ omod SLURP is
   var garbage : String .
   op getstr : Object -> String .
   var out : String .
-  var N : Nat .
+  var M : Nat .
   op slurp_ : String -> String .
-  op ssplit : String String -> List{String} .
-  op sp1 : String Nat -> List{String} .
-  op sp3 : List{String} String -> List{String} .
   op fln : String -> List{String} .
-
-  eq sp1(X, notFound) = X "" .
-  eq sp1(X, N) = substr(X , 0 , N) substr(X, N + 1 , length(X)) . 
-  eq sp3(X Y,Z) = append([X], ssplit(Y,Z)) .
-  eq ssplit("", Y) = [] .
-  eq ssplit(X, Y) = sp3(sp1(X, find(X,Y,0)),Y) . 
 
   eq fln(X) = ssplit(slurp X,"\n") .
   eq getstr( < me : Me | Acc : out > ) = out .
@@ -43,3 +35,30 @@ omod SLURP is
     < me : Me | Acc : garbage, As > closeFile(sfil, me) .
   rl <> < me : Me | As > closedFile(me, sfil) => < me : Me | As > .
 endom
+
+mod SPLIT is
+  ex LIST*{String} .
+  var X Y Z : String .
+  var M N : Nat .
+  op ssplit : String String -> List{String} .
+  op sp1 : String Nat Nat -> List{String} .
+  op sp3 : List{String} String -> List{String} .
+
+  eq sp1(X, notFound, M) = X "" .
+  eq sp1(X, N, M) = substr(X , 0 , N) substr(X, N + M , length(X)) . 
+  eq sp3(X Y,Z) = append([X], ssplit(Y,Z)) .
+  eq ssplit("", Y) = [] .
+  eq ssplit(X, Y) = sp3(sp1(X, find(X,Y,0), length(Y)),Y) . 
+endm
+
+*** (
+mod FUNC{X :: TRIV} is
+  ex LIST*{X} .
+  pr META-TERM . 
+  var F : Term .
+  var Y : List{X} .
+  op map : X List{X} -> List{X} .
+  
+  eq map(F, Y) = append( [F head(Y)], map(F, tail(Y)) ) .
+endm 
+)
